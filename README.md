@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧑‍💻기술 설계 & 개발 환경
 
-## Getting Started
+## 📖 라이브러리
 
-First, run the development server:
+| 목적        | 라이브러리 패키지       |
+| ----------- | ----------------------- |
+| Next-js     | `next`                  |
+| TypeScript  | `typescript`            |
+| 스타일링    | `tailwindcss`           |
+| 차트        | `apexcharts`            |
+| 상태관리    | `zustand`               |
+| 데이터 쿼리 | `@tanstack/react-query` |
+| API 통신    | `axios`                 |
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌐 기술 스택
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 전역 상태 관리: Zustand
+- 쿼리: TanStack Query
+- 스타일: TailwindCSS
+- 주가 차트 : ApexCharts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔐 인증 / 보안
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- .env 파일 + 내부 API Routes
+- 키 보안
 
-## Learn More
+## 🚀 도구
 
-To learn more about Next.js, take a look at the following resources:
+- GitHub ⇒ Vercel
+- 브랜치 전략: main / dev / feature
+- Jira ⇒ 협업툴
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 배포
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Vercel
 
-## Deploy on Vercel
+## 📁 App-router
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+├── .env.local # KIS API 키
+├── README.md
+├── package.json
+├── tsconfig.json
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+├── app/
+│ ├── layout.tsx # 글로벌 레이아웃
+│ ├── page.tsx # 메인 페이지 (/): 공매도 상위 30 + 검색 (CSR)
+│ ├── [slug]/ # 종목 상세 페이지 : 차트+점수+공매도 현황 (SSR)
+│ │ └── page.tsx
+│ └── api/
+│ └── short/
+│ ├── list/route.ts # GET /api/short/list
+│ └── [slug]/route.ts # GET /api/short/[code]
+├── components/
+│ ├── HourlyChart.tsx # 1시간 단위 차트
+│ ├── ShortDetail.tsx # 공매도 상세 정보 UI
+│ ├── ShortScore.tsx # 점수 게이지 시각화
+│ └── StockList.tsx # 메인 종목 리스트 UI
+├── constants/
+│ └── kis.ts # API 상수
+├── data/
+│ └── sector_avg_short.json # 업종 평균 공매도 비중(예정)
+├── hooks/ # 커스텀훅
+├── lib/
+│ ├── api/
+│ │ └── kis/
+│ │ ├── getShortData.ts # 종목별 공매도 비중 API 호출
+│ │ └── getToken.ts # Access Token 발급
+│ ├── format.ts # 날짜, 숫자 포맷 유틸
+│ └── score.ts # 공매도 점수 계산기
+├── stores/
+│ └── searchStore.ts # 전역 상태관리(Zustand)
+├── styles/ # Tailwind 글로벌 스타일 등
+├── types/
+│ ├── api.d.ts # API 타입
+│ ├── kis.d.ts # KIS API 타입
+│ └── stock.d.ts # 종목 타입
+
+### 📏 정렬 확장프로그램
+
+- ESLint / Prettier
