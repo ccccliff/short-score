@@ -17,7 +17,7 @@ export const getAccessToken = (): string | null => {
     readFileSync(accessTokenFilePath, "utf-8")
   );
 
-  if (new Date() < access_token_token_expired) {
+  if (new Date() < new Date(access_token_token_expired)) {
     return access_token;
   }
 
