@@ -3,7 +3,7 @@ import * as tokenCache from "@/lib/tokenCache";
 import axios from "axios";
 
 jest.mock("axios");
-const mockedAxios = axios.post as jest.Mocked<typeof axios>;
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe("getAccessToken", () => {
   //**NOTE - 매 테스트마다 실행되는 함수
