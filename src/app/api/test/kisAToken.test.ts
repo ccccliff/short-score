@@ -1,6 +1,10 @@
 import { getKisToken } from "@/app/api/kis/get-token/route";
 import * as tokenCache from "@/lib/tokenCache";
 import axios from "axios";
+import fs from "fs";
+
+const aliveTime = "2999-06-10 12:00:00Z";
+const staledTime = "1999-06-10 12:00:00Z";
 
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -32,14 +36,32 @@ describe("getAccessToken", () => {
           access_token: "new-token",
           token_type: "Bearer",
           expires_in: 11111,
-          access_token_token_expired: "2025-06-10 12:00:00",
+          access_token_token_expired: aliveTime,
         },
       })
     );
 
-    const aToken = await getKisToken();
+    const newToken = await getKisToken();
 
-    expect(aToken).toBe("new-token");
+    expect(newToken).toBe("new-token");
     expect(mockedSetToken).toHaveBeenCalled();
+  });
+
+  test("만료된 토큰이면 삭제", () => {
+    const mockedUnlink = jest
+      .spyOn(fs, "unlinkSync")
+      .mockImplementation(() => {});
+
+    jest.spyOn(tokenCache, "getAccessToken").mockImplementation(() => {
+      fs.unlinkSync("some-path");
+      return null;
+    });
+
+    const result = tokenCache.getAccessToken();
+
+    expect(result).toBe(null);
+    expect(mockedUnlink).toHaveBeenCalled();
+
+    mockedUnlink.mockRestore();
   });
 });

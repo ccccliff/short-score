@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import fs from "fs";
 import path from "path";
 const accessTokenFilePath = path.join(
   process.cwd(),
@@ -12,18 +12,21 @@ export const setAccessToken = (
   access_token_token_expired: string
 ) => {
   const data = { access_token, access_token_token_expired };
-  writeFileSync(accessTokenFilePath, JSON.stringify(data));
+  fs.writeFileSync(accessTokenFilePath, JSON.stringify(data));
 };
 
 export const getAccessToken = (): string | null => {
-  if (!existsSync(accessTokenFilePath)) return null;
+  if (!fs.existsSync(accessTokenFilePath)) return null;
 
   const { access_token, access_token_token_expired } = JSON.parse(
-    readFileSync(accessTokenFilePath, "utf-8")
+    fs.readFileSync(accessTokenFilePath, "utf-8")
   );
 
   if (new Date() < new Date(access_token_token_expired)) {
     return access_token;
+  } else {
+    //삭제 로직
+    fs.unlinkSync(accessTokenFilePath);
   }
 
   return null;
