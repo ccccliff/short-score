@@ -1,6 +1,11 @@
 import { existsSync, readFileSync, writeFileSync } from "fs";
-
-const accessTokenFilePath = "./tokenCache.json";
+import path from "path";
+const accessTokenFilePath = path.join(
+  process.cwd(),
+  "src",
+  "data",
+  "tokenCache.json"
+);
 
 export const setAccessToken = (
   access_token: string,
