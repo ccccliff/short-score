@@ -1,8 +1,12 @@
 import path from "path";
+import fs from "fs";
 import { cwd } from "process";
 
 export const parsingKosdaqMst = () => {
   const kosdaqMstPath = path.join(cwd(), "/public/kosdaq_code.mst");
+
+  const buffer = fs.readFileSync(kosdaqMstPath);
+  console.log(buffer);
 };
 
 // import fs from "fs";
