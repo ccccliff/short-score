@@ -1,4 +1,4 @@
-import { getKisToken } from "@/app/api/kis/getToken";
+import { getKisToken } from "@/app/api/kis/get-token/route";
 import * as tokenCache from "@/lib/tokenCache";
 import axios from "axios";
 
