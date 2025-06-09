@@ -3,7 +3,7 @@ import fs from "fs";
 import { cwd } from "process";
 import { getKosdaqJson, setKosdaqJson } from "@/lib/mstParsingCache";
 
-export const getJsonKosdaqMst = () => {
+export const parsingKosdaq = () => {
   const cachedKosdaqJson = getKosdaqJson();
 
   if (cachedKosdaqJson) return cachedKosdaqJson;

@@ -1,5 +1,4 @@
 import fs from "fs";
-import { NextResponse } from "next/server";
 import path from "path";
 
 const kospiJsonFilePath = path.join(process.cwd(), "src", "data", "kospi.json");
@@ -17,10 +16,10 @@ export const setKospiJson = (data: { code: string; name: string }[]) => {
 export const getKospiJson = () => {
   //없으니까 null 반환
   if (!fs.existsSync(kospiJsonFilePath)) return null;
-
-  const kospiJson = fs.readFileSync(kospiJsonFilePath, "utf-8");
-
-  return kospiJson;
+  //fs를 사용하면 바이너리 집합체인 buffer형식이니 문자열로 바꿔줘야한다 +   공백제거
+  const kospiJsonStr = fs.readFileSync(kospiJsonFilePath, "utf-8").trim();
+  // 빈배열 undefined로 처리 + 문자열을 json으로 파싱
+  return kospiJsonStr === "[]" ? undefined : JSON.parse(kospiJsonStr);
 };
 
 export const setKosdaqJson = (data: { code: string; name: string }[]) => {
@@ -29,8 +28,8 @@ export const setKosdaqJson = (data: { code: string; name: string }[]) => {
 
 export const getKosdaqJson = () => {
   if (!fs.existsSync(kosdaqJsonFilePath)) return null;
-  //fs를 사용하면 바이너리 집합체인 buffer형식이니 바꿔줘야한다
-  const kosdaqJson = fs.readFileSync(kosdaqJsonFilePath, "utf-8");
-
-  return kosdaqJson;
+  //fs를 사용하면 바이너리 집합체인 buffer형식이니 문자열로 바꿔줘야한다 +   공백제거
+  const kosdaqJsonStr = fs.readFileSync(kosdaqJsonFilePath, "utf-8").trim();
+  // 빈배열 undefined로 처리 + 문자열을 json으로 파싱
+  return JSON.parse(kosdaqJsonStr) || undefined;
 };

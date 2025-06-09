@@ -19,7 +19,7 @@ export const getAccessToken = (): string | null => {
   if (!fs.existsSync(accessTokenFilePath)) return null;
 
   const { access_token, access_token_token_expired } = JSON.parse(
-    fs.readFileSync(accessTokenFilePath, "utf-8")
+    fs.readFileSync(accessTokenFilePath, "utf-8").trim()
   );
 
   if (new Date() < new Date(access_token_token_expired)) {
