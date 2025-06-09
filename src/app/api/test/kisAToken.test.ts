@@ -22,7 +22,7 @@ describe("getAccessToken", () => {
     jest.clearAllTimers();
 
     if (fs.existsSync(accessTokenFilePath)) {
-      fs.unlinkSync(accessTokenFilePath);
+      fs.writeFileSync(accessTokenFilePath, JSON.stringify({}));
     }
   }, 10);
 

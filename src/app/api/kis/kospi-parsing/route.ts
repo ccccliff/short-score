@@ -17,11 +17,13 @@ export const parsingKospi = () => {
   //라인별 파싱
   const lines = content.split("\n");
   //배열로 반환
-  const stocks = lines.map((line) => {
-    const code = line.substring(0, 6).trim();
-    const name = line.substring(20, 40).trim();
-    return { code, name };
-  });
+  const stocks = lines
+    .map((line) => {
+      const code = line.substring(0, 6).trim();
+      const name = line.substring(20, 40).trim();
+      return { code, name };
+    })
+    .filter((item) => item.code && item.name);
 
   setKospiJson(stocks);
 
