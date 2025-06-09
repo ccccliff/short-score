@@ -2,10 +2,16 @@ import { getKisAccessToken } from "@/app/api/kis/get-token/route";
 import * as tokenCache from "@/lib/tokenCache";
 import axios from "axios";
 import fs from "fs";
+import path from "path";
 
 const aliveTime = "2999-06-10 12:00:00Z";
 const staledTime = "1999-06-10 12:00:00Z";
-
+const accessTokenFilePath = path.join(
+  process.cwd(),
+  "src",
+  "data",
+  "tokenCache.json"
+);
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
@@ -14,6 +20,10 @@ describe("getAccessToken", () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.clearAllTimers();
+
+    if (fs.existsSync(accessTokenFilePath)) {
+      fs.unlinkSync(accessTokenFilePath);
+    }
   }, 10);
 
   test("if aToken is in cache, return aToken(접속토큰)", async () => {
