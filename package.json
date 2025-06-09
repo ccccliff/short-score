@@ -23,7 +23,7 @@
     "@babel/preset-typescript": "^7.27.1",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "@types/iconv": "^3.0.4",
+    "@types/iconv-lite": "^0.0.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.30",
     "@types/react": "^19",
