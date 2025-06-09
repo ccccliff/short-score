@@ -1,9 +1,13 @@
 import path from "path";
 import fs from "fs";
 import { cwd } from "process";
-import { NextResponse } from "next/server";
+import { getKospiJson, setKospiJson } from "@/lib/mstParsingCache";
 
-export const getJsonKospiMst = () => {
+export const parsingKospi = () => {
+  const cachedKospiJson = getKospiJson();
+
+  if (cachedKospiJson) return cachedKospiJson;
+
   //배포시 퍼블릭에 있는 static파일 읽기
   const kospiMstPath = path.join(cwd(), "/public/kospi_code.mst");
 
@@ -18,8 +22,10 @@ export const getJsonKospiMst = () => {
     return { code, name };
   });
 
-  return NextResponse.json({
+  setKospiJson(stocks);
+
+  return {
     message: "kospi_code 파싱 성공",
     data: stocks,
-  });
+  };
 };

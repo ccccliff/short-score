@@ -3,7 +3,7 @@ import { getAccessToken, setAccessToken } from "@/lib/tokenCache";
 import { KisAccessTokenResponse } from "@/types/kis";
 
 //NOTE - Promise 반환하기 때문에 명시적으로 Promise 작성, 사실 없어도 async가 자동으로 promise 감싸줌
-export const getKisToken = async (): Promise<string> => {
+export const getKisAccessToken = async (): Promise<string> => {
   const cachedAccessToken = getAccessToken();
   //falsy값 전부처리 null뿐만 아니라 ""도 나올수 있음
   if (cachedAccessToken) {

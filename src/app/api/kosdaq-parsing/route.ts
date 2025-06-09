@@ -1,9 +1,13 @@
 import path from "path";
 import fs from "fs";
 import { cwd } from "process";
-import { NextResponse } from "next/server";
+import { getKosdaqJson, setKosdaqJson } from "@/lib/mstParsingCache";
 
 export const getJsonKosdaqMst = () => {
+  const cachedKosdaqJson = getKosdaqJson();
+
+  if (cachedKosdaqJson) return cachedKosdaqJson;
+
   //배포시 퍼블릭에 있는 static파일 읽기
   const kosdaqMstPath = path.join(cwd(), "/public/kosdaq_code.mst");
 
@@ -18,8 +22,10 @@ export const getJsonKosdaqMst = () => {
     return { code, name };
   });
 
-  return NextResponse.json({
+  setKosdaqJson(stocks);
+
+  return {
     message: "kosdaq_code 파싱 성공",
     data: stocks,
-  });
+  };
 };
