@@ -19,7 +19,7 @@ export const getKospiJson = () => {
   //fs를 사용하면 바이너리 집합체인 buffer형식이니 문자열로 바꿔줘야한다 +   공백제거
   const kospiJsonStr = fs.readFileSync(kospiJsonFilePath, "utf-8").trim();
   // 빈배열 undefined로 처리 + 문자열을 json으로 파싱
-  return kospiJsonStr === "[]" ? undefined : JSON.parse(kospiJsonStr);
+  return kospiJsonStr === "" ? undefined : JSON.parse(kospiJsonStr);
 };
 
 export const setKosdaqJson = (data: { code: string; name: string }[]) => {
@@ -31,5 +31,5 @@ export const getKosdaqJson = () => {
   //fs를 사용하면 바이너리 집합체인 buffer형식이니 문자열로 바꿔줘야한다 +   공백제거
   const kosdaqJsonStr = fs.readFileSync(kosdaqJsonFilePath, "utf-8").trim();
   // 빈배열 undefined로 처리 + 문자열을 json으로 파싱
-  return JSON.parse(kosdaqJsonStr) || undefined;
+  return kosdaqJsonStr === "" ? undefined : JSON.parse(kosdaqJsonStr);
 };
