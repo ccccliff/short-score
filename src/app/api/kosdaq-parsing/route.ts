@@ -2,17 +2,23 @@ import path from "path";
 import fs from "fs";
 import { cwd } from "process";
 import { getKosdaqJson, setKosdaqJson } from "@/lib/mstParsingCache";
+import iconv from "iconv-lite";
 
 export const parsingKosdaq = () => {
   const cachedKosdaqJson = getKosdaqJson();
 
-  if (cachedKosdaqJson) return cachedKosdaqJson;
+  if (cachedKosdaqJson) {
+    return {
+      message: "kosdaq_code 캐쉬 성공",
+      data: cachedKosdaqJson,
+    };
+  }
 
   //배포시 퍼블릭에 있는 static파일 읽기
   const kosdaqMstPath = path.join(cwd(), "/public/kosdaq_code.mst");
 
   const buffer = fs.readFileSync(kosdaqMstPath);
-  const content = buffer.toString("utf-8");
+  const content = iconv.decode(buffer, "cp949");
 
   //라인별 파싱
   const lines = content.split("\n");
