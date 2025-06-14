@@ -9,7 +9,9 @@ const kosdaqJsonFilePath = path.join(
   "kosdaq.json"
 );
 
-export const setKospiJson = (data: { code: string; name: string }[]) => {
+export const setKospiJson = (
+  data: { shortCode: string; standardCode: string; name: string }[]
+) => {
   fs.writeFileSync(kospiJsonFilePath, JSON.stringify(data));
 };
 
@@ -24,7 +26,9 @@ export const getKospiJson = () => {
   return kospiJsonContent === "" ? undefined : JSON.parse(kospiJsonContent);
 };
 
-export const setKosdaqJson = (data: { code: string; name: string }[]) => {
+export const setKosdaqJson = (
+  data: { shortCode: string; standardCode: string; name: string }[]
+) => {
   fs.writeFileSync(kosdaqJsonFilePath, JSON.stringify(data));
 };
 

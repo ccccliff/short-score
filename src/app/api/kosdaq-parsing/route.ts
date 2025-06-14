@@ -24,11 +24,12 @@ export const parsingKosdaq = () => {
   const lines = content.split("\n");
   const stocks = lines
     .map((line) => {
-      const code = line.substring(0, 6).trim();
-      const name = line.substring(20, 40).trim();
-      return { code, name };
+      const shortCode = line.substring(0, 9).trim();
+      const standardCode = line.substring(9, 21).trim();
+      const name = line.substring(21, 40).trim();
+      return { shortCode, standardCode, name };
     })
-    .filter((item) => item.code && item.name);
+    .filter((item) => item.shortCode && item.name && item.standardCode);
 
   setKosdaqJson(stocks);
 
