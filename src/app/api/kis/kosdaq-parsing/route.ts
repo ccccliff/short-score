@@ -4,12 +4,13 @@ import { cwd } from "process";
 import { getKosdaqJson, setKosdaqJson } from "@/lib/mstParsingCache";
 import iconv from "iconv-lite";
 
+//api 로 바꿀려고 lib에 안두고 여기 임시저장
 export const parsingKosdaq = () => {
   const cachedKosdaqJson = getKosdaqJson();
 
   if (cachedKosdaqJson) {
     return {
-      message: "kosdaq_code 캐쉬 성공",
+      message: "kosdaq_code 200 OK",
       data: cachedKosdaqJson,
     };
   }
@@ -34,7 +35,7 @@ export const parsingKosdaq = () => {
   setKosdaqJson(stocks);
 
   return {
-    message: "kosdaq_code 파싱 성공",
+    message: "kosdaq_code 200 OK",
     data: stocks,
   };
 };

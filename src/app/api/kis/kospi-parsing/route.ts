@@ -4,12 +4,13 @@ import { cwd } from "process";
 import { getKospiJson, setKospiJson } from "@/lib/mstParsingCache";
 import iconv from "iconv-lite";
 
+//api 로 바꿀려고 lib에 안두고 여기 임시저장
 export const parsingKospi = () => {
   const cachedKospiJson = getKospiJson();
 
   if (cachedKospiJson) {
     return {
-      message: "kospi_code 캐쉬 성공",
+      message: "kospi_code 200 OK",
       data: cachedKospiJson,
     };
   }
@@ -35,7 +36,7 @@ export const parsingKospi = () => {
   setKospiJson(stocks);
 
   return {
-    message: "kospi_code 파싱 성공",
+    message: "kospi_code 200 OK",
     data: stocks,
   };
 };

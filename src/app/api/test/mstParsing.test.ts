@@ -1,5 +1,5 @@
-import { parsingKosdaq } from "../kosdaq-parsing/route";
-import { parsingKospi } from "../kis/kospi-parsing/route";
+import { parsingKosdaq } from "@/app/api/kis/kosdaq-parsing/route";
+import { parsingKospi } from "@/app/api/kis/kospi-parsing/route";
 import * as mstParsingCache from "@/lib/mstParsingCache";
 
 describe("parsingMst", () => {
@@ -9,12 +9,16 @@ describe("parsingMst", () => {
   }, 10);
 
   test("kosdaq.json is in cache", () => {
-    const fakeData = [{ code: "123456", name: "테스트" }];
+    const fakeData = [
+      { shortCode: "123456", standardCode: "293483", name: "테스트" },
+    ];
+    const receivedData = { data: fakeData, message: "kosdaq_code 200 OK" };
+
     jest.spyOn(mstParsingCache, "getKosdaqJson").mockReturnValue(fakeData);
 
     const parsing = parsingKosdaq();
 
-    expect(parsing).toEqual(fakeData);
+    expect(parsing).toEqual(receivedData);
   });
 
   test("kosdaq.json is in cache but value is []", () => {
@@ -46,12 +50,17 @@ describe("parsingMst", () => {
   });
 
   test("kospi.json is in cache", () => {
-    const fakeData = [{ code: "123456", name: "테스트" }];
+    const fakeData = [
+      { shortCode: "123456", standardCode: "293483", name: "테스트" },
+    ];
+
+    const receivedData = { data: fakeData, message: "kospi_code 200 OK" };
+
     jest.spyOn(mstParsingCache, "getKospiJson").mockReturnValue(fakeData);
 
     const parsing = parsingKospi();
 
-    expect(parsing).toEqual(fakeData);
+    expect(parsing).toEqual(receivedData);
   });
 
   test("kosdaq.json is in cache but value is []", () => {

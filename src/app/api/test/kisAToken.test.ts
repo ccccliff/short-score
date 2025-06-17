@@ -1,4 +1,4 @@
-import { getKisAccessToken } from "@/app/api/kis/get-token/route";
+import { POST } from "@/app/api/kis/get-token/route";
 import * as tokenCache from "@/lib/tokenCache";
 import axios from "axios";
 import fs from "fs";
@@ -29,7 +29,7 @@ describe("getAccessToken", () => {
   test("if aToken is in cache, return aToken(접속토큰)", async () => {
     //NOTE - getAccessToken을 돌렸을때 aToken이 리턴된다고 설정
     jest.spyOn(tokenCache, "getAccessToken").mockReturnValue("aToken");
-    const aToken = await getKisAccessToken();
+    const aToken = await POST();
 
     expect(aToken).toBe("aToken");
     expect(mockedAxios.post).not.toHaveBeenCalled();
@@ -51,7 +51,7 @@ describe("getAccessToken", () => {
       })
     );
 
-    const newToken = await getKisAccessToken();
+    const newToken = await POST();
 
     expect(newToken).toBe("new-token");
     expect(mockedSetToken).toHaveBeenCalled();
