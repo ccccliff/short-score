@@ -1,11 +1,17 @@
-import { getKisToken } from "@/app/api/kis/get-token/route";
+import { POST } from "@/app/api/kis/get-token/route";
 import * as tokenCache from "@/lib/tokenCache";
 import axios from "axios";
 import fs from "fs";
+import path from "path";
 
 const aliveTime = "2999-06-10 12:00:00Z";
 const staledTime = "1999-06-10 12:00:00Z";
-
+const accessTokenFilePath = path.join(
+  process.cwd(),
+  "src",
+  "data",
+  "tokenCache.json"
+);
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
@@ -14,12 +20,16 @@ describe("getAccessToken", () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.clearAllTimers();
+
+    if (fs.existsSync(accessTokenFilePath)) {
+      fs.writeFileSync(accessTokenFilePath, JSON.stringify({}));
+    }
   }, 10);
 
   test("if aToken is in cache, return aToken(접속토큰)", async () => {
     //NOTE - getAccessToken을 돌렸을때 aToken이 리턴된다고 설정
     jest.spyOn(tokenCache, "getAccessToken").mockReturnValue("aToken");
-    const aToken = await getKisToken();
+    const aToken = await POST();
 
     expect(aToken).toBe("aToken");
     expect(mockedAxios.post).not.toHaveBeenCalled();
@@ -41,7 +51,7 @@ describe("getAccessToken", () => {
       })
     );
 
-    const newToken = await getKisToken();
+    const newToken = await POST();
 
     expect(newToken).toBe("new-token");
     expect(mockedSetToken).toHaveBeenCalled();
