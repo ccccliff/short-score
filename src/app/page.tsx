@@ -1,10 +1,10 @@
 import React from "react";
-import { getKisAccessToken } from "./api/kis/get-token/route";
+import { POST } from "./api/kis/get-token/route";
 import { parsingKospi } from "./api/kis/kospi-parsing/route";
 import { parsingKosdaq } from "./api/kis/kosdaq-parsing/route";
 
 const page = () => {
-  let token = getKisAccessToken();
+  let token = POST();
   let kospiJson = parsingKospi();
   let kosdaqJson = parsingKosdaq();
 
