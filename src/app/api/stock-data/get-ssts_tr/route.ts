@@ -1,4 +1,4 @@
-import { POST } from "@/app/api/kis/get-token/route";
+import { getToken } from "@/lib/getToken";
 import { findKosdaqStockCode, findKospiStockCode } from "@/lib/findStockCode";
 import axios from "axios";
 import { notFound } from "next/navigation";
@@ -12,7 +12,7 @@ monthAgoDate.setDate(now.getDate() - 30);
 const monthAgo = monthAgoDate.toISOString().slice(0, 10).replace(/-/g, "");
 
 export const GET = async (slug: string): Promise<NextResponse> => {
-  const accessToken = await POST();
+  const accessToken = await getToken();
   const kosdaqStockCode = await findKosdaqStockCode(slug);
   const kospiStockCode = await findKospiStockCode(slug);
   const stockCode = kosdaqStockCode || kospiStockCode;
@@ -36,13 +36,13 @@ export const GET = async (slug: string): Promise<NextResponse> => {
   const url = `${process.env
     .KIS_BASE_URL!}/uapi/domestic-stock/v1/quotations/daily-short-sale`;
 
-  const res = axios.get(url, {
+  const res = await axios.get(url, {
     headers,
-    queryParameter,
+    params: queryParameter,
   });
 
   return NextResponse.json({
-    data: res,
+    data: res.data,
     message: "status 200 OK",
   });
 };
