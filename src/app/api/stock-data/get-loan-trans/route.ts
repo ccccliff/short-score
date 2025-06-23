@@ -1,4 +1,4 @@
-import { POST } from "../get-token/route";
+import { POST } from "../../../../lib/getToken";
 import axios from "axios";
 
 export const GET = async () => {

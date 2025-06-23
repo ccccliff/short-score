@@ -32,6 +32,7 @@ export const parsingKosdaq = () => {
     })
     .filter((item) => item.shortCode && item.name && item.standardCode);
 
+  //utf-8로 저장
   setKosdaqJson(stocks);
 
   return {

@@ -1,5 +1,5 @@
-import { parsingKosdaq } from "@/app/api/kis/kosdaq-parsing/route";
-import { parsingKospi } from "@/app/api/kis/kospi-parsing/route";
+import { parsingKosdaq } from "@/lib/parsingKosdaq";
+import { parsingKospi } from "@/lib/parsingKospi";
 import * as mstParsingCache from "@/lib/mstParsingCache";
 
 describe("parsingMst", () => {

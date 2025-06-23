@@ -1,9 +1,26 @@
-import axios from "axios";
-import { POST } from "@/app/api/kis/get-token/route";
+import fs from "fs";
+import path from "path";
+import { kosJsonStock } from "@/types/stock";
+const kosdaqJsonPath = path.join(process.cwd(), "src", "data", "kosdaq.json");
+const kospiJsonPath = path.join(process.cwd(), "src", "data", "kospi.json");
 
-export const GET = async (slug: string) => {
-  const accessToken = await POST();
-  const url = "https://openapi.koreainvestment.com:9443";
+export const findKosdaqStockCode = async (slug: string) => {
+  if (fs.existsSync(kosdaqJsonPath)) {
+    const kosdaqJson = fs.readFileSync(kosdaqJsonPath, "utf-8");
+    const kosdaqJsonArr: kosJsonStock[] = JSON.parse(kosdaqJson);
 
-  const res = axios.get();
+    return kosdaqJsonArr.find((e) => e.name === slug) || null;
+  }
+
+  return null;
+};
+
+export const findKospiStockCode = async (slug: string) => {
+  if (fs.existsSync(kospiJsonPath)) {
+    const kospiJson = fs.readFileSync(kospiJsonPath, "utf-8");
+    const kospiJsonArr: kosJsonStock[] = JSON.parse(kospiJson);
+    return kospiJsonArr.find((e) => e.name === slug) || null;
+  }
+
+  return null;
 };
